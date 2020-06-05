@@ -10,7 +10,7 @@ from deblurgan.model import generator_model, discriminator_model, generator_cont
 
 from keras.callbacks import TensorBoard
 from keras.optimizers import Adam
-
+from keras.models import load_model
 BASE_DIR = 'weights/'
 
 
@@ -56,6 +56,8 @@ def train_multiple_outputs(n_images, batch_size, log_dir, epoch_num, critic_upda
             batch_indexes = permutated_indexes[index*batch_size:(index+1)*batch_size]
             image_blur_batch = x_train[batch_indexes]
             image_full_batch = y_train[batch_indexes]
+
+            g.load_weights('generator.h5')
 
             generated_images = g.predict(x=image_blur_batch, batch_size=batch_size)
 
