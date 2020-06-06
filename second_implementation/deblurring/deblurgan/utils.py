@@ -30,9 +30,19 @@ def preprocess_image(cv_img):
     cv_img = cv_img.resize(RESHAPE)
     #print (cv_img.shape)
     img = np.array(cv_img)
-    #print (img[:,:,3])
+    #print (img.ndim)
+    #if img.ndim < 3:
     img = (img - 127.5) / 127.5
-    return img[:,:,0:3]
+    img1 = img
+    if img.ndim < 3:
+      #print('entered')
+      img1 = np.zeros((256,256,3))
+      img1[:,:,0] = img
+      img1[:,:,1] = img
+      img1[:,:,2] = img
+      #print('exit')
+      #return img1
+    return img1[:,:,0:3]
 
 
 def deprocess_image(img):
